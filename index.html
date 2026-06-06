@@ -2961,8 +2961,8 @@
           <div class="quick-actions-row">
             <span class="quick-actions-title">Quick Actions:</span>
             ${isAdmin || isOfficer ? `
-              <button class="btn btn-primary btn-sm" onclick="showCreateRFQForm()">+ New RFQ</button>
-              <button class="btn btn-outline btn-sm" onclick="showAddVendorModal()">+ Add Vendor</button>
+              <button class="btn btn-primary btn-sm" onclick="Router.navigate('#/rfqs?new=true')">+ New RFQ</button>
+              <button class="btn btn-outline btn-sm" onclick="Router.navigate('#/vendors?add=true')">+ Add Vendor</button>
             ` : ''}
             ${isAdmin || isManager ? `
               <button class="btn btn-success btn-sm" onclick="Router.navigate('#/approvals')">View Approvals</button>
@@ -2984,7 +2984,7 @@
     // ----------------------------------------------------
     let vendorPagerInstance = null;
 
-    function renderVendors() {
+    function renderVendors(params) {
       const vendors = DB.get('vb_vendors') || [];
       const session = DB.get('vb_session');
       
@@ -3217,6 +3217,11 @@
         closeModal('vendor-modal');
         renderVendors();
       });
+
+      // Check query parameter trigger
+      if (params && params.add === 'true') {
+        showAddVendorModal();
+      }
     }
 
     // Modal launchers
@@ -3342,7 +3347,7 @@
     // ----------------------------------------------------
     let rfqPagerInstance = null;
 
-    function renderRFQs() {
+    function renderRFQs(params) {
       const rfqs = DB.get('vb_rfqs') || [];
       const session = DB.get('vb_session');
       const vendors = DB.get('vb_vendors') || [];
@@ -3525,6 +3530,11 @@
         }
         rfqPagerInstance.updateData(list);
       });
+
+      // Check query parameter trigger
+      if (params && params.new === 'true') {
+        showCreateRFQForm();
+      }
     }
 
     // Dynamic row generation for RFQ Create Form
