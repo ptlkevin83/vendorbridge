@@ -3931,11 +3931,7 @@
             DB.log(session.email, 'User', `Auto-created User account for Vendor: ${name} (${contact})`);
           }
 
-          // Populate invitation credentials modal
           const portalLink = window.location.origin + window.location.pathname;
-          document.getElementById('invite-portal-link').textContent = portalLink;
-          document.getElementById('invite-email').textContent = email;
-          
           const inviteText = `Dear ${contact},\n\n` +
             `Welcome to VendorBridge ERP! Your vendor profile has been successfully registered.\n\n` +
             `You can now access our procurement portal to view invited Requests for Quotations (RFQs), submit pricing, and manage your purchase orders.\n\n` +
@@ -3946,20 +3942,27 @@
             `Best regards,\n` +
             `Procurement Team\n` +
             `VendorBridge ERP`;
-            
-          document.getElementById('invite-text-copy').value = inviteText;
 
           // Send in-app welcome email
           DB.sendEmail(email, session.email, 'Welcome to VendorBridge ERP - Access Credentials', inviteText);
 
-          // Set up email button
-          document.getElementById('btn-send-invite-mail').onclick = () => {
-            closeModal('vendor-invite-modal');
-            sendEmailWithModal(email, "Welcome to VendorBridge ERP - Access Credentials", inviteText);
-          };
-
-          // Delay slightly so that the vendor-modal closes first
+          // Delay slightly so that the vendor-modal closes first and renderVendors finishes
           setTimeout(() => {
+            const portalLink = window.location.origin + window.location.pathname;
+            const linkEl = document.getElementById('invite-portal-link');
+            const emailEl = document.getElementById('invite-email');
+            const copyEl = document.getElementById('invite-text-copy');
+            const btnEl = document.getElementById('btn-send-invite-mail');
+            
+            if (linkEl) linkEl.textContent = portalLink;
+            if (emailEl) emailEl.textContent = email;
+            if (copyEl) copyEl.value = inviteText;
+            if (btnEl) {
+              btnEl.onclick = () => {
+                closeModal('vendor-invite-modal');
+                sendEmailWithModal(email, "Welcome to VendorBridge ERP - Access Credentials", inviteText);
+              };
+            }
             openModal('vendor-invite-modal');
           }, 300);
         }
