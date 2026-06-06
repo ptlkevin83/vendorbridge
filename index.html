@@ -2840,6 +2840,10 @@
         `;
       } else {
         // ADMIN / OFFICER / MANAGER
+        const isAdmin = role === 'Admin';
+        const isOfficer = role === 'Procurement Officer';
+        const isManager = role === 'Manager';
+
         const rfqs = DB.get('vb_rfqs') || [];
         const approvals = DB.get('vb_approvals') || [];
         const pos = DB.get('vb_pos') || [];
