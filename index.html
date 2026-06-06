@@ -1640,15 +1640,70 @@
   <!-- APP SCRIPTS AND ENGINE -->
   <script>
     // ----------------------------------------------------
+    // GLOBAL RUNTIME ERROR MONITORING
+    // ----------------------------------------------------
+    window.onerror = function(message, source, lineno, colno, error) {
+      console.error("GLOBAL RUNTIME ERROR:", message, "at", source, ":", lineno, ":", colno, error);
+      const root = document.getElementById('app-root');
+      if (root) {
+        root.innerHTML = `
+          <div style="padding: 2.5rem; background-color: #fff; border: 2px solid var(--danger-red); border-radius: 8px; margin: 3rem auto; max-width: 650px; box-shadow: var(--shadow-lg); font-family: 'Roboto', sans-serif;">
+            <div style="display:flex; align-items:center; gap: 1rem; margin-bottom: 1.5rem; color: var(--danger-red);">
+              <span style="font-size: 3rem;">⚠️</span>
+              <div>
+                <h2 style="font-weight: 700; margin: 0;">VendorBridge ERP Runtime Alert</h2>
+                <p style="margin: 0; font-size: 0.9rem; opacity: 0.8;">An unhandled system exception occurred during execution.</p>
+              </div>
+            </div>
+            <div style="background-color: #f8f9fa; border: 1px solid var(--border-color); border-left: 4px solid var(--danger-red); padding: 1rem; border-radius: 4px; font-size: 0.88rem; margin-bottom: 1.5rem; line-height: 1.5;">
+              <p><b>Error Details:</b> ${message}</p>
+              <p><b>Source File:</b> ${source.substring(source.lastIndexOf('/') + 1)} | Line: ${lineno} | Col: ${colno}</p>
+            </div>
+            ${error && error.stack ? `
+              <details style="margin-bottom: 1.5rem;">
+                <summary style="cursor:pointer; font-weight:500; font-size:0.85rem; color:var(--primary-purple); outline:none;">View detailed stack trace</summary>
+                <pre style="margin-top: 0.5rem; padding: 1rem; background: #272822; color: #f8f8f2; border-radius: 4px; font-family: monospace; font-size: 0.75rem; overflow: auto; max-height: 200px; line-height: 1.4;">${error.stack}</pre>
+              </details>
+            ` : ''}
+            <div style="display:flex; gap:1rem; border-top:1px solid var(--border-color); padding-top:1.5rem;">
+              <button onclick="localStorage.clear(); location.reload();" class="btn btn-danger" style="flex:1; padding: 0.6rem;">🔧 Clear LocalStorage & Hard Reset</button>
+              <button onclick="location.reload();" class="btn btn-outline" style="flex:1; padding: 0.6rem;">🔄 Reload Page</button>
+            </div>
+          </div>
+        `;
+      }
+      return false;
+    };
+
+    // ----------------------------------------------------
     // DATABASE / LOCAL STORAGE ENGINE
     // ----------------------------------------------------
     const DB = {
-      get: (key) => JSON.parse(localStorage.getItem(key)),
-      set: (key, val) => localStorage.setItem(key, JSON.stringify(val)),
+      get: (key) => {
+        try {
+          const val = localStorage.getItem(key);
+          return val ? JSON.parse(val) : null;
+        } catch (e) {
+          console.error("DB.get error for:", key, e);
+          return null;
+        }
+      },
+      set: (key, val) => {
+        try {
+          localStorage.setItem(key, JSON.stringify(val));
+        } catch (e) {
+          console.error("DB.set error for:", key, val, e);
+        }
+      },
       init: () => {
         // Reset DB if old schema detected (contains Procurement Officer or Manager)
-        const oldUsers = DB.get('vb_users');
-        if (oldUsers && oldUsers.some(u => u.role === 'Procurement Officer' || u.role === 'Manager')) {
+        try {
+          const oldUsers = DB.get('vb_users');
+          if (oldUsers && Array.isArray(oldUsers) && oldUsers.some(u => u && (u.role === 'Procurement Officer' || u.role === 'Manager'))) {
+            localStorage.clear();
+          }
+        } catch (e) {
+          console.error("DB.init schema check error, clearing storage...", e);
           localStorage.clear();
         }
 
