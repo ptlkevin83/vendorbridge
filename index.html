@@ -491,6 +491,8 @@
 
     /* TOP NAVBAR */
     .navbar {
+      grid-column: 2;
+      grid-row: 1;
       background-color: var(--white);
       border-bottom: 1px solid var(--border-color);
       display: flex;
@@ -632,6 +634,8 @@
 
     /* MAIN CONTENT */
     .main-content {
+      grid-column: 2;
+      grid-row: 2;
       overflow-y: auto;
       padding: 1.5rem;
     }
@@ -1514,7 +1518,8 @@
     /* RESPONSIVE DESIGN - COLLAPSIBLE SIDEBAR */
     @media (max-width: 992px) {
       .erp-container {
-        grid-template-columns: 0 1fr;
+        grid-template-columns: 1fr;
+        grid-template-rows: 60px 1fr;
       }
 
       .sidebar {
@@ -1528,6 +1533,16 @@
 
       .sidebar.show {
         transform: translateX(0);
+      }
+
+      .navbar {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .main-content {
+        grid-column: 1;
+        grid-row: 2;
       }
 
       .hamburger-menu {
@@ -1811,6 +1826,24 @@
     }
     .ai-send-btn:hover {
       background-color: var(--primary-dark);
+    }
+
+    /* AI COPILOT MOBILE RESPONSIVENESS */
+    @media (max-width: 576px) {
+      .ai-copilot-panel {
+        right: 15px;
+        left: 15px;
+        width: calc(100% - 30px);
+        height: 60vh;
+        bottom: 85px;
+      }
+      .ai-copilot-btn {
+        bottom: 15px;
+        right: 15px;
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+      }
     }
   </style>
 </head>
