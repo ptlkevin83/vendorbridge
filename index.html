@@ -1657,7 +1657,7 @@
             </div>
             <div style="background-color: #f8f9fa; border: 1px solid var(--border-color); border-left: 4px solid var(--danger-red); padding: 1rem; border-radius: 4px; font-size: 0.88rem; margin-bottom: 1.5rem; line-height: 1.5;">
               <p><b>Error Details:</b> ${message}</p>
-              <p><b>Source File:</b> ${source.substring(source.lastIndexOf('/') + 1)} | Line: ${lineno} | Col: ${colno}</p>
+              <p><b>Source File:</b> ${(source && typeof source === 'string') ? source.substring(source.lastIndexOf('/') + 1) : 'inline/unknown'} | Line: ${lineno} | Col: ${colno}</p>
             </div>
             ${error && error.stack ? `
               <details style="margin-bottom: 1.5rem;">
@@ -7168,6 +7168,22 @@
       updateSidebarActive();
     }
 
+    // All system routes mapped to their roles
+    Router.add('#/login', renderLogin);
+    Router.add('#/signup', renderSignup);
+    Router.add('#/dashboard', renderDashboard);
+    Router.add('#/mailbox', renderMailbox);
+    Router.add('#/vendors', renderVendors, ['Super Admin', 'Procurement Executive']);
+    Router.add('#/rfqs', renderRFQs, ['Super Admin', 'Procurement Executive', 'Vendor']);
+    Router.add('#/quotations', renderQuotations, ['Super Admin', 'Procurement Executive', 'Vendor']);
+    Router.add('#/rfqs/compare', renderQuotationComparison, ['Super Admin', 'Procurement Executive']);
+    Router.add('#/approvals', renderApprovals, ['Super Admin', 'Department Approver']);
+    Router.add('#/pos', renderPOs, ['Super Admin', 'Procurement Executive', 'Vendor']);
+    Router.add('#/pos/view', renderPOView, ['Super Admin', 'Procurement Executive', 'Vendor']);
+    Router.add('#/invoices', renderInvoices, ['Super Admin', 'Finance', 'Vendor']);
+    Router.add('#/invoices/view', renderInvoiceView, ['Super Admin', 'Finance', 'Vendor']);
+    Router.add('#/logs', renderLogs, ['Super Admin']);
+    Router.add('#/analytics', renderAnalytics, ['Super Admin']);
     Router.add('#/users', renderUsers, ['Super Admin']);
     Router.add('#/requests', renderRequests, ['Super Admin', 'Requester']);
     Router.add('#/requests/convert', renderRequestsConvert, ['Super Admin', 'Procurement Executive']);
