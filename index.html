@@ -1627,6 +1627,191 @@
         border-top-color: black !important;
       }
     }
+
+    /* AI COPILOT FLOATING BUTTON & WIDGET */
+    .ai-copilot-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(118, 75, 162, 0.4);
+      z-index: 1000;
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    .ai-copilot-btn:hover {
+      transform: scale(1.08) rotate(5deg);
+      box-shadow: 0 6px 20px rgba(118, 75, 162, 0.6);
+    }
+    .ai-copilot-btn::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid #764ba2;
+      animation: pulseAI 2s infinite;
+      opacity: 0;
+      pointer-events: none;
+    }
+    @keyframes pulseAI {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+    
+    .ai-copilot-panel {
+      position: fixed;
+      bottom: 95px;
+      right: 25px;
+      width: 380px;
+      height: 520px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(135, 90, 123, 0.2);
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: translateY(20px) scale(0.95);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.25s;
+    }
+    .ai-copilot-panel.show {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .ai-copilot-header {
+      background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ai-copilot-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .ai-copilot-subtitle {
+      font-size: 0.7rem;
+      opacity: 0.8;
+      display: block;
+      margin-top: 2px;
+    }
+    .ai-copilot-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.25rem;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: opacity var(--transition-speed);
+    }
+    .ai-copilot-close:hover { opacity: 1; }
+    
+    .ai-copilot-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background-color: #F8F9FA;
+    }
+    .ai-message {
+      max-width: 85%;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .ai-message.system {
+      align-self: flex-start;
+      background-color: var(--white);
+      color: var(--text-dark);
+      border-bottom-left-radius: 2px;
+      border-left: 3px solid var(--primary-purple);
+    }
+    .ai-message.user {
+      align-self: flex-end;
+      background-color: var(--primary-purple);
+      color: white;
+      border-bottom-right-radius: 2px;
+    }
+    .ai-suggestions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: auto;
+      padding-top: 0.5rem;
+    }
+    .ai-suggestion-chip {
+      background-color: var(--white);
+      border: 1px solid var(--border-color);
+      color: var(--primary-purple);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      text-align: left;
+      font-weight: 500;
+      transition: background-color var(--transition-speed), border-color var(--transition-speed);
+    }
+    .ai-suggestion-chip:hover {
+      background-color: #F3EDF7;
+      border-color: var(--primary-purple);
+    }
+    
+    .ai-copilot-footer {
+      padding: 0.75rem 1rem;
+      background-color: var(--white);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 0.5rem;
+    }
+    .ai-input {
+      flex: 1;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .ai-input:focus {
+      border-color: var(--primary-purple);
+    }
+    .ai-send-btn {
+      background-color: var(--primary-purple);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--transition-speed);
+    }
+    .ai-send-btn:hover {
+      background-color: var(--primary-dark);
+    }
   </style>
 </head>
 <body>
@@ -2089,6 +2274,7 @@
           route.render(params);
           if (session) {
             updateMailboxBadge();
+            initAICopilot();
           }
         } else {
           // Page not found or default
@@ -2344,7 +2530,10 @@
         DB.log(session.email, 'System', 'User logged out successfully.');
       }
       localStorage.removeItem('vb_session');
+      copilotHistory = [];
+      copilotOpen = false;
       showToast('Logged out successfully!', 'info');
+      initAICopilot();
       Router.navigate('#/login');
     }
 
@@ -7223,6 +7412,366 @@
     Router.add('#/users', renderUsers, ['Super Admin']);
     Router.add('#/requests', renderRequests, ['Super Admin', 'Requester']);
     Router.add('#/requests/convert', renderRequestsConvert, ['Super Admin', 'Procurement Executive']);
+
+    // ----------------------------------------------------
+    // AI COPILOT SYSTEM
+    // ----------------------------------------------------
+    let copilotHistory = [];
+    let copilotOpen = false;
+
+    function initAICopilot() {
+      const session = DB.get('vb_session');
+      if (!session) {
+        const existingBtn = document.getElementById('ai-copilot-btn-root');
+        if (existingBtn) existingBtn.style.display = 'none';
+        const existingPanel = document.getElementById('ai-copilot-panel-root');
+        if (existingPanel) {
+          existingPanel.classList.remove('show');
+          existingPanel.style.display = 'none';
+        }
+        return;
+      }
+
+      let btn = document.getElementById('ai-copilot-btn-root');
+      let panel = document.getElementById('ai-copilot-panel-root');
+
+      if (!btn) {
+        btn = document.createElement('div');
+        btn.id = 'ai-copilot-btn-root';
+        btn.className = 'ai-copilot-btn';
+        btn.innerHTML = '✨';
+        btn.onclick = toggleAICopilot;
+        document.body.appendChild(btn);
+
+        panel = document.createElement('div');
+        panel.id = 'ai-copilot-panel-root';
+        panel.className = 'ai-copilot-panel';
+        panel.innerHTML = `
+          <div class="ai-copilot-header">
+            <div class="ai-copilot-title">
+              <div>
+                <span>🤖 AI Procurement Copilot</span>
+                <span class="ai-copilot-subtitle">Real-time local data reasoning</span>
+              </div>
+            </div>
+            <button class="ai-copilot-close" onclick="toggleAICopilot()">×</button>
+          </div>
+          <div class="ai-copilot-body" id="ai-copilot-messages-container"></div>
+          <div class="ai-copilot-footer">
+            <input type="text" id="ai-copilot-input-field" class="ai-input" placeholder="Ask AI about local database..." />
+            <button id="ai-copilot-send-btn" class="ai-send-btn">Send</button>
+          </div>
+        `;
+        document.body.appendChild(panel);
+
+        const inputField = document.getElementById('ai-copilot-input-field');
+        inputField.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') handleCopilotSend();
+        });
+        const sendBtn = document.getElementById('ai-copilot-send-btn');
+        sendBtn.addEventListener('click', handleCopilotSend);
+
+        if (copilotHistory.length === 0) {
+          addCopilotMessage('system', `Hello **${session.name}**! I am your AI Procurement Copilot. I scan the live VendorBridge local storage to answer questions, audit invoices, compare quotes, and generate templates. How can I help you today?`);
+        }
+      } else {
+        btn.style.display = 'flex';
+        if (copilotOpen) {
+          panel.style.display = 'flex';
+          panel.classList.add('show');
+        } else {
+          panel.style.display = 'none';
+          panel.classList.remove('show');
+        }
+      }
+
+      renderCopilotHistory();
+    }
+
+    function toggleAICopilot() {
+      const panel = document.getElementById('ai-copilot-panel-root');
+      if (panel) {
+        copilotOpen = !copilotOpen;
+        if (copilotOpen) {
+          panel.style.display = 'flex';
+          setTimeout(() => panel.classList.add('show'), 10);
+          const inputField = document.getElementById('ai-copilot-input-field');
+          if (inputField) inputField.focus();
+        } else {
+          panel.classList.remove('show');
+          setTimeout(() => {
+            if (!copilotOpen) panel.style.display = 'none';
+          }, 250);
+        }
+      }
+    }
+
+    function addCopilotMessage(sender, text) {
+      copilotHistory.push({ sender, text });
+      renderCopilotHistory();
+    }
+
+    function renderCopilotHistory() {
+      const container = document.getElementById('ai-copilot-messages-container');
+      if (!container) return;
+
+      const session = DB.get('vb_session');
+      if (!session) return;
+
+      let html = '';
+      copilotHistory.forEach(msg => {
+        const formattedText = msg.text.replace(/\*\*(.*?)\*\//g, '<strong>$1</strong>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        html += `
+          <div class="ai-message ${msg.sender}">
+            ${formattedText}
+          </div>
+        `;
+      });
+
+      const suggestions = getSuggestionsForRoleAndRoute(session.role, window.location.hash);
+      if (suggestions.length > 0) {
+        html += `
+          <div class="ai-suggestions" style="margin-top: 1rem;">
+            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 500; margin-bottom: 0.25rem;">Suggested Prompts:</div>
+            ${suggestions.map(s => `
+              <button class="ai-suggestion-chip" onclick="handleSuggestionClick(this.innerText)">${s}</button>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function handleSuggestionClick(text) {
+      const inputField = document.getElementById('ai-copilot-input-field');
+      if (inputField) {
+        inputField.value = text;
+        handleCopilotSend();
+      }
+    }
+
+    function handleCopilotSend() {
+      const inputField = document.getElementById('ai-copilot-input-field');
+      if (!inputField) return;
+      const text = inputField.value.trim();
+      if (!text) return;
+
+      inputField.value = '';
+      addCopilotMessage('user', text);
+
+      setTimeout(() => {
+        const response = getCopilotResponse(text);
+        addCopilotMessage('system', response);
+      }, 700);
+    }
+
+    function getSuggestionsForRoleAndRoute(role, hash) {
+      const suggestions = [];
+      const parts = hash.split('?')[0];
+
+      if (role === 'Requester') {
+        suggestions.push("How do I raise a Purchase Request?");
+        suggestions.push("Draft a PR item description for MacBook Pro");
+        suggestions.push("Show my pending approvals");
+      } 
+      else if (role === 'Department Approver') {
+        suggestions.push("Summary of pending PRs");
+        suggestions.push("How do I approve or reject requests?");
+      } 
+      else if (role === 'Procurement Executive') {
+        if (parts === '#/rfqs/compare') {
+          suggestions.push("Compare quotations for MacBook Pro");
+        } else {
+          suggestions.push("Compare active vendor bids");
+        }
+        suggestions.push("Draft RFQ email invite template");
+        suggestions.push("List top vendor ratings");
+      } 
+      else if (role === 'Vendor') {
+        suggestions.push("Check my PO acceptance list");
+        suggestions.push("What RFQs am I invited to?");
+      } 
+      else if (role === 'Finance') {
+        suggestions.push("Audit invoices for 3-way match");
+        suggestions.push("Validate invoice INV-2026-0001 details");
+      } 
+      else if (role === 'Super Admin') {
+        suggestions.push("System-wide P2P pipeline status");
+        suggestions.push("Search activity logs for logins");
+      }
+      
+      suggestions.push("Explain the Procure-to-Pay (P2P) workflow");
+      return [...new Set(suggestions)].slice(0, 3);
+    }
+
+    function getCopilotResponse(queryText) {
+      const query = queryText.toLowerCase();
+      const prs = DB.get('vb_purchase_requests') || [];
+      const rfqs = DB.get('vb_rfqs') || [];
+      const quotations = DB.get('vb_quotations') || [];
+      const pos = DB.get('vb_pos') || [];
+      const invoices = DB.get('vb_invoices') || [];
+      const vendors = DB.get('vb_vendors') || [];
+      const logs = DB.get('vb_logs') || [];
+      const session = DB.get('vb_session') || { name: 'User' };
+
+      const fmt = (val) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(val);
+
+      if (query.includes('pipeline') || query.includes('summary') || query.includes('status') || query.includes('backlog')) {
+        let response = `Here is a real-time summary of the procurement pipeline as of today:<br/>`;
+        response += `• **Purchase Requests (PRs):** ${prs.length} total. Status count: `;
+        const prStatuses = prs.reduce((acc, p) => { acc[p.status] = (acc[p.status] || 0) + 1; return acc; }, {});
+        response += Object.entries(prStatuses).map(([status, count]) => `**${status}** (${count})`).join(', ');
+        
+        response += `<br/>• **RFQs Published:** ${rfqs.length} total. Active statuses: `;
+        const rfqStatuses = rfqs.reduce((acc, r) => { acc[r.status] = (acc[r.status] || 0) + 1; return acc; }, {});
+        response += Object.entries(rfqStatuses).map(([status, count]) => `**${status}** (${count})`).join(', ');
+
+        response += `<br/>• **Purchase Orders (POs):** ${pos.length} total. Statuses: `;
+        const poStatuses = pos.reduce((acc, p) => { acc[p.status] = (acc[p.status] || 0) + 1; return acc; }, {});
+        response += Object.entries(poStatuses).map(([status, count]) => `**${status}** (${count})`).join(', ');
+
+        response += `<br/>• **Invoices:** ${invoices.length} total. Paid: **${invoices.filter(i=>i.status==='Paid').length}**, Pending verification: **${invoices.filter(i=>i.status==='Pending Verification').length}**.`;
+        return response;
+      }
+
+      if (query.includes('audit') || query.includes('discrepanc') || query.includes('3-way') || query.includes('match') || query.includes('reconcile')) {
+        let response = `**Invoice Reconciliation & 3-Way Match Audit Report:**<br/>`;
+        let issues = [];
+
+        invoices.forEach(inv => {
+          const po = pos.find(p => p.id === inv.poId);
+          if (!po) {
+            issues.push(`• **${inv.invoiceNumber}**: Associated PO not found in the database.`);
+            return;
+          }
+          
+          const vendor = vendors.find(v => v.id === inv.vendorId);
+          const vendorName = vendor ? vendor.name : 'Unknown';
+
+          const valueMismatch = Math.abs(po.total - inv.total) > 1;
+          const poNotAccepted = po.status === 'Pending Acceptance';
+
+          if (valueMismatch || poNotAccepted) {
+            let desc = `• **${inv.invoiceNumber}** (from ${vendorName}): `;
+            if (valueMismatch) desc += `Value Mismatch! Invoice amount **${fmt(inv.total)}** doesn't match PO amount **${fmt(po.total)}**. `;
+            if (poNotAccepted) desc += `Vendor has not officially accepted the PO yet (status: '${po.status}'). `;
+            issues.push(desc);
+          }
+        });
+
+        if (issues.length === 0) {
+          response += `✅ **Audit Passed:** All invoices in the system successfully pass the 3-Way Match. PO existence matches Invoice totals, and vendors have accepted the contracts.`;
+        } else {
+          response += `⚠️ **Potential Issues Detected:**<br/>` + issues.join('<br/>');
+        }
+        return response;
+      }
+
+      if (query.includes('compare') || query.includes('quote') || query.includes('bid')) {
+        if (rfqs.length === 0) return "There are no RFQs currently created in the database to compare quotations for.";
+        
+        let response = `**Active RFQ Quotations Analysis:**<br/>`;
+        rfqs.forEach(rfq => {
+          const rfqQuotes = quotations.filter(q => q.rfqId === rfq.id);
+          if (rfqQuotes.length === 0) {
+            response += `• **${rfq.rfqNumber}** ("${rfq.title}"): No quotations received yet.<br/>`;
+            return;
+          }
+
+          response += `• **${rfq.rfqNumber}** ("${rfq.title}"): Received ${rfqQuotes.length} quotation(s):<br/>`;
+          let bestQuote = null;
+          let bestPrice = Infinity;
+
+          rfqQuotes.forEach(q => {
+            const vendor = vendors.find(v => v.id === q.vendorId) || { name: 'Unknown', rating: 0 };
+            const totalPrice = q.items.reduce((sum, item) => sum + item.totalPrice, 0);
+            const deliveryDays = q.items.reduce((max, item) => Math.max(max, item.deliveryDays), 0);
+            
+            response += `  - **${vendor.name}**: Total cost **${fmt(totalPrice)}** | Delivery: **${deliveryDays} days** | Rating: **${vendor.rating}/5**<br/>`;
+            
+            if (totalPrice < bestPrice) {
+              bestPrice = totalPrice;
+              bestQuote = { vendor, totalPrice, deliveryDays };
+            }
+          });
+
+          if (bestQuote) {
+            response += `  🌟 **AI Bid Recommendation:** Award contract to **${bestQuote.vendor.name}** at **${fmt(bestQuote.totalPrice)}** (lowest pricing). `;
+            if (bestQuote.deliveryDays > 8) {
+              response += `*Note: Expedited shipping could reduce the ${bestQuote.deliveryDays} days lead time.*`;
+            }
+            response += `<br/>`;
+          }
+        });
+        return response;
+      }
+
+      if (query.includes('vendor') || query.includes('supplier') || query.includes('rating')) {
+        let response = `Here are the currently registered vendor profiles sorted by rating:<br/>`;
+        const sorted = [...vendors].sort((a,b) => b.rating - a.rating);
+        sorted.forEach((v, index) => {
+          response += `${index + 1}. **${v.name}** (${v.category}) — Rating: **${v.rating}/5** | GST: ${v.gst} | Contact: ${v.contactPerson}<br/>`;
+        });
+        return response;
+      }
+
+      if (query.includes('draft') && (query.includes('pr') || query.includes('item') || query.includes('macbook') || query.includes('laptop'))) {
+        return `**AI-Drafted Item Description Template:**<br/><br/>
+*Item:* MacBook Pro 16" (M3 Max chip, 36GB Unified Memory, 1TB SSD)<br/>
+*Quantity:* 10 Units<br/>
+*Justification:* Standard engineering laptop upgrade for Q3 software developer onboarding. Hardware matches corporate cybersecurity performance specifications.<br/>
+*Estimated Price:* ₹2,50,000 per unit.<br/><br/>
+*Tip: You can copy and paste this justification directly into your next Purchase Request!*`;
+      }
+
+      if (query.includes('email') || query.includes('invite') || query.includes('rfq email')) {
+        return `**AI-Drafted RFQ Supplier Invitation Email:**<br/>
+\`\`\`
+Subject: RFQ Invitation: ${rfqs[0] ? rfqs[0].title : 'Corporate Procurement Request'}
+Dear Partner,
+
+We are pleased to invite your company to submit a formal quotation for the following procurement request:
+"${rfqs[0] ? rfqs[0].title : 'MacBook Pro Laptops & Workstations'}"
+
+Please review the attached technical specifications on the VendorBridge Portal and submit your pricing, lead delivery terms, and warranty terms before the deadline.
+
+Portal Link: C:/Users/ptlke/.gemini/antigravity/scratch/vendorbridge/index.html
+Best regards,
+${session.name}
+Procurement Department
+\`\`\``;
+      }
+
+      if (query.includes('raise') || query.includes('create pr') || query.includes('how do i pr')) {
+        return `To raise a **Purchase Request (PR)**:<br/>
+1. Log in as a **Requester** role.<br/>
+2. Go to the **Purchase Requests** sidebar navigation.<br/>
+3. Click the purple **"+ Raise Purchase Request"** button.<br/>
+4. Fill in the Title, select your Department, write the Description, and click **"+ Add Item Row"** to add quantities and estimated rates.<br/>
+5. Click **"Submit for Approval"** to route it to the Department Head (Bob Approver).`;
+      }
+
+      if (query.includes('workflow') || query.includes('p2p') || query.includes('procure') || query.includes('cycle') || query.includes('how does')) {
+        return `The **VendorBridge Procure-to-Pay (P2P)** flow operates in 6 sequential stages:<br/><br/>
+1. **Purchase Request (PR):** Raised by a **Requester** for department needs.<br/>
+2. **Approval Queue:** Reviewed and approved by the **Department Approver**.<br/>
+3. **RFQ Conversion:** The **Procurement Executive** converts approved PRs into Requests for Quotations (RFQs).<br/>
+4. **Quotation Bidding:** Invited **Vendors** receive the RFQ and submit pricing.<br/>
+5. **PO Generation:** The Buyer compares bids and awards the contract, generating a **Purchase Order (PO)**.<br/>
+6. **Delivery & Invoicing:** The Vendor accepts the PO, ships goods, and uploads an **Invoice**.<br/>
+7. **3-Way Match Verification:** **Finance** reconciles the PO, GRN, and Invoice values to approve corporate payment release.`;
+      }
+
+      return `I analyzed your query: *"${queryText}"*. I can help you with:<br/>
+• **"Pipeline summary"**: Show active PRs, RFQs, POs, and Invoices status.<br/>
+• **"Compare bids"**: Recommend vendors by pricing and lead times.<br/>
+• **"Audit discrepancies"**: Execute a 3-way match validation across POs and Invoices.<br/>
+• **"Vendor profiles"**: List registered suppliers and ratings.<br/>
+• **"Draft email"**: Generate a professional invite template.`;
+    }
   </script>
 </body>
 </html>
